@@ -36,7 +36,8 @@ func Get_Abuse_Daily(addr string, texto *string, c chan int) {
 	bodys, _ := io.ReadAll(resp.Body)
 
 	//fmt.Println(string(bodys))
-	if strings.Contains("error", string(bodys)){
+	if !strings.Contains("error", string(bodys)){
+		fmt.Println("non contiene errori")
 		*texto += string(bodys)
 	}
 	fmt.Println(<-c)
