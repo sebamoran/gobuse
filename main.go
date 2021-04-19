@@ -20,7 +20,8 @@ func main(){
 			addr = append(addr,e.Text)
 			fmt.Println("dd	->  \n"+e.Text)
 			fmt.Println(len(addr))
-			go getabuse.Get_Abuse_Daily(e.Text, &texto, channel)
+			//go getabuse.Get_Last_Abuse(e.Text, &texto, channel)
+			go getabuse.Get_Score_Abuse(70, channel)
 			channel <- len(addr)
 		}
 	})
