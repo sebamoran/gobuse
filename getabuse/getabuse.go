@@ -8,6 +8,7 @@ import (
 	"os"
 	"strings"
 	"time"
+	"github.com/tidwall/gjson"
 )
 
 func Get_Abuse_Daily(addr string, texto *string, c chan int) {
@@ -33,12 +34,14 @@ func Get_Abuse_Daily(addr string, texto *string, c chan int) {
 		fmt.Println(err)
 	}
 
-	bodys, _ := io.ReadAll(resp.Body)
+	body_res, _ := io.ReadAll(resp.Body)
 
-	fmt.Println(string(bodys))
-	if !strings.Contains("error", string(bodys)){
-		fmt.Println("non contiene errori")
-		*texto += string(bodys)
+	//fmt.Println(string(bodys))
+	if !strings.Contains("error", string(body_res)){
+		//fmt.Println("non contiene errori")
+		country := gjson.Get(body_res,"data.countryCode")
+		*texto += country
+		//*texto += string(body_res)
 	}
 	fmt.Println(<-c)
 	defer resp.Body.Close()
